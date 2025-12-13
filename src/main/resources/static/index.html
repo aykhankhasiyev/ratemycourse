@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>RateMyCourse – ADA University Course Reviews</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+<body data-page="home">
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <!-- Brand clickable -> home -->
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <!-- Mortarboard icon -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 8.5L12 4l9 4.5-9 4.5L3 8.5Z" />
+            <path d="M6.5 11l5.5 2.75L17.5 11" />
+            <path d="M19 10.5V16c0 1.66-3.13 3-7 3s-7-1.34-7-3v-5.5" />
+          </svg>
+        </div>
+        <span class="brand-name">RateMyCourse</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="courses.html" class="nav-link">Courses</a>
+        <a href="professors.html" class="nav-link">Professors</a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="nav-auth">
+          <button class="btn btn-ghost" id="btn-login">Log In</button>
+          <button class="btn btn-primary" id="btn-signup">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <span class="badge">⭐ Trusted by ADA University Students</span>
+
+        <h1 class="hero-title">
+          Make Smarter <span class="accent">Course</span> Choices
+        </h1>
+
+        <p class="hero-subtitle">
+          Read authentic reviews from fellow students, discover the best
+          professors, and find the perfect courses for your academic journey.
+        </p>
+
+        <div class="hero-search">
+          <input
+            id="hero-search-input"
+            type="text"
+            placeholder="Search by course name, code, or professor..."
+          />
+          <button class="btn btn-primary" id="hero-search-btn">
+            Search Courses
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Courses</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100+</span>
+            <span class="stat-label">Professors</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">2K+</span>
+            <span class="stat-label">Reviews</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-curve"></div>
+    </section>
+
+    <!-- WHY -->
+    <section class="section" id="why">
+      <div class="container">
+        <h2 class="section-title">Why Students Love RateMyCourse</h2>
+        <p class="section-subtitle">
+          Make informed decisions about your academic journey with real
+          insights from your peers.
+        </p>
+
+        <div class="three-cards">
+          <article class="info-card">
+            <div class="info-icon">📈</div>
+            <h3>Honest Reviews</h3>
+            <p>
+              Read authentic feedback from students who have taken the course.
+              No fake reviews, just real experiences.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <div class="info-icon">⏱</div>
+            <h3>Workload Insights</h3>
+            <p>
+              Understand the time commitment before enrolling and plan your
+              semester with accurate workload expectations.
+            </p>
+          </article>
+
+          <article class="info-card">
+            <div class="info-icon">🏅</div>
+            <h3>Top Professors</h3>
+            <p>
+              Find the best professors based on student ratings and know what
+              to expect before the first day.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section-cta">
+      <div class="container cta-inner">
+        <h2 class="cta-title">Ready to Share Your Experience?</h2>
+        <p class="cta-subtitle">
+          Help fellow students make better choices. Your review could be the
+          one that helps someone find their perfect course.
+        </p>
+        <button class="btn btn-primary" id="home-write-review">Write a Review</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <!-- Brand clickable -> home -->
+        <a href="index.html" class="brand">
+          <div class="brand-icon brand-icon-small">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 8.5L12 4l9 4.5-9 4.5L3 8.5Z" />
+              <path d="M6.5 11l5.5 2.75L17.5 11" />
+              <path d="M19 10.5V16c0 1.66-3.13 3-7 3s-7-1.34-7-3v-5.5" />
+            </svg>
+          </div>
+          <span class="brand-name">RateMyCourse</span>
+        </a>
+        <p class="footer-text">
+          Empowering ADA University students to make informed decisions about
+          their courses through authentic peer reviews.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="courses.html">Browse Courses</a>
+        <a href="professors.html">Find Professors</a>
+        <a href="#why">About Us</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:ratemycourse@ada.edu.az">ratemycourse@ada.edu.az</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2024 RateMyCourse by Team EduVision. ADA University – School of IT and
+      Engineering.
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

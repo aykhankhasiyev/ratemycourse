@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Find Professors – RateMyCourse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+</head>
+<body data-page="professors">
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <!-- Brand clickable -> home -->
+      <a href="index.html" class="brand">
+        <div class="brand-icon">
+          <!-- Mortarboard icon -->
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 8.5L12 4l9 4.5-9 4.5L3 8.5Z" />
+            <path d="M6.5 11l5.5 2.75L17.5 11" />
+            <path d="M19 10.5V16c0 1.66-3.13 3-7 3s-7-1.34-7-3v-5.5" />
+          </svg>
+        </div>
+        <span class="brand-name">RateMyCourse</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="courses.html" class="nav-link">Courses</a>
+        <a href="professors.html" class="nav-link">Professors</a>
+      </nav>
+
+      <div class="nav-right">
+        <div class="nav-auth">
+          <button class="btn btn-ghost" id="btn-login">Log In</button>
+          <button class="btn btn-primary" id="btn-signup">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<div id="review-modal" class="modal hidden">
+  <div class="modal-backdrop"></div>
+  <div class="modal-panel">
+    <button class="modal-close" aria-label="Close">×</button>
+    <h3 id="modal-title"></h3>
+    <p id="modal-subtitle" class="modal-subtitle"></p>
+    <div id="modal-reviews"></div>
+  </div>
+</div>
+
+<main class="professors-main">
+  <section class="section professors-section">
+    <div class="container">
+      <h2 class="section-title">Find Professors</h2>
+      <p class="section-subtitle">
+        Discover top-rated professors and learn from the best educators at ADA University.
+      </p>
+
+      <div class="filters-row">
+        <div class="filters-search">
+          <input
+            id="professors-search-input"
+            type="text"
+            placeholder="Search by professor name..."
+          />
+        </div>
+
+        <div class="filters-selects">
+          <select id="prof-department-filter">
+            <option value="all">All Schools</option>
+            <option value="School of IT and Engineering">School of IT and Engineering</option>
+            <option value="School of Business">School of Business</option>
+            <option value="School of Public and International Affairs">School of Public and International Affairs</option>
+            <option value="School of Law">School of Law</option>
+            <option value="School of Education">School of Education</option>
+            <option value="School of Agricultural and Food Sciences">School of Agricultural and Food Sciences</option>
+            <option value="School of Design and Architecture">School of Design and Architecture</option>
+          </select>
+
+          <select id="prof-sort">
+            <option value="rating-desc">Highest Rated</option>
+            <option value="rating-asc">Lowest Rated</option>
+            <option value="reviews-desc">Most Reviewed</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="results-label" id="professors-count"></p>
+
+      <div class="card-grid" id="professors-grid"></div>
+    </div>
+  </section>
+</main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <!-- Brand clickable -> home -->
+        <a href="index.html" class="brand">
+          <div class="brand-icon brand-icon-small">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 8.5L12 4l9 4.5-9 4.5L3 8.5Z" />
+              <path d="M6.5 11l5.5 2.75L17.5 11" />
+              <path d="M19 10.5V16c0 1.66-3.13 3-7 3s-7-1.34-7-3v-5.5" />
+            </svg>
+          </div>
+          <span class="brand-name">RateMyCourse</span>
+        </a>
+        <p class="footer-text">
+          Empowering ADA University students to make informed decisions about
+          their courses through authentic peer reviews.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="courses.html">Browse Courses</a>
+        <a href="professors.html">Find Professors</a>
+        <a href="#why">About Us</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:ratemycourse@ada.edu.az">ratemycourse@ada.edu.az</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © 2025 RateMyCourse by Team EduVision. ADA University – School of IT and
+      Engineering.
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Professor Details – RateMyCourse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="professor-detail">
+    <!-- Header -->
+    <header class="navbar">
+      <div class="container navbar-inner">
+        <!-- Brand clickable -> home -->
+        <a href="index.html" class="brand">
+          <div class="brand-icon">
+            <!-- Mortarboard icon -->
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 8.5L12 4l9 4.5-9 4.5L3 8.5Z" />
+              <path d="M6.5 11l5.5 2.75L17.5 11" />
+              <path d="M19 10.5V16c0 1.66-3.13 3-7 3s-7-1.34-7-3v-5.5" />
+            </svg>
+          </div>
+          <span class="brand-name">RateMyCourse</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="courses.html" class="nav-link">Courses</a>
+          <a href="professors.html" class="nav-link">Professors</a>
+        </nav>
+
+        <div class="nav-right">
+          <div class="nav-auth">
+            <button class="btn btn-ghost" id="btn-login">Log In</button>
+            <button class="btn btn-primary" id="btn-signup">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Professor hero -->
+    <section class="section detail-hero">
+      <div class="container detail-hero-inner">
+        <div class="detail-hero-main">
+          <button class="back-link" onclick="window.location.href='professors.html'">
+            ← Back to Professors
+          </button>
+
+          <h1 id="prof-name">Professor Name</h1>
+          <p id="prof-school" class="detail-school">School name</p>
+          <p id="prof-courses-count" class="detail-subtitle">
+            Teaches 0 courses
+          </p>
+        </div>
+
+        <aside class="detail-rating-card">
+          <div class="rating-stars-static detail-stars">
+            <div class="rating-stars-bg">★★★★★</div>
+            <div class="rating-stars-fill" id="prof-stars-fill">★★★★★</div>
+          </div>
+
+          <div class="detail-rating-value" id="prof-rating">—</div>
+          <div class="detail-rating-sub" id="prof-review-count">No reviews yet</div>
+          <div class="detail-diff-label">
+            Difficulty:
+            <span id="prof-difficulty" class="difficulty-badge"></span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Courses taught by this professor -->
+    <section class="section prof-courses-section">
+      <div class="container">
+        <h2>Courses Taught</h2>
+        <div id="prof-courses-grid" class="courses-grid">
+          <!-- JS ilə doldurulacaq -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Student reviews -->
+    <section class="section detail-reviews prof-reviews-section">
+      <div class="container">
+        <div class="reviews-header">
+          <h2>Student Reviews</h2>
+          <div class="reviews-actions">
+            <select id="prof-review-sort">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="rating-desc">Highest Rating</option>
+              <option value="rating-asc">Lowest Rating</option>
+            </select>
+            <button class="btn btn-primary btn-small" id="prof-write-review-top">
+              Write Review
+            </button>
+          </div>
+        </div>
+
+        <div id="prof-reviews-empty" class="reviews-empty">
+          <div class="reviews-empty-icon">💬</div>
+          <h3>No Reviews Yet</h3>
+          <p>Be the first to share your experience with this professor!</p>
+          <button class="btn btn-primary btn-small" id="prof-write-review-empty">
+            Write the First Review
+          </button>
+        </div>
+
+        <div id="prof-reviews-list"></div>
+      </div>
+    </section>
+
+    <!-- PROFESSOR REVIEW MODAL -->
+    <div id="prof-review-modal" class="review-modal hidden">
+      <div class="review-modal-backdrop"></div>
+      <div class="review-modal-panel">
+        <div class="review-modal-header">
+          <div>
+            <h3>Write a Review</h3>
+            <p id="prof-modal-subtitle" class="modal-subtitle-small"></p>
+          </div>
+          <button class="modal-close-btn" id="prof-modal-close">×</button>
+        </div>
+
+        <form class="review-modal-form" id="prof-modal-form">
+          <label class="modal-label">Overall Rating *</label>
+          <div class="rating-input">
+            <div class="rating-stars-wrapper" id="prof-rating-stars">
+              <div class="rating-stars-bg">★★★★★</div>
+              <div class="rating-stars-fill" id="prof-rating-stars-fill">
+                ★★★★★
+              </div>
+            </div>
+            <span class="rating-input-value" id="prof-rating-value">0.0/5</span>
+          </div>
+
+          <label class="modal-label">Course *</label>
+          <select id="prof-modal-course">
+            <option value="">Select course</option>
+            <!-- JS professorun dərslərini əlavə edəcək -->
+          </select>
+
+          <label class="modal-label">Difficulty Level *</label>
+          <select id="prof-modal-difficulty">
+            <option value="">Select difficulty</option>
+            <option value="Easy">Easy</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Hard">Hard</option>
+          </select>
+
+          <label class="modal-label">When did you take this course? *</label>
+          <div class="review-form-row">
+            <select id="prof-modal-semester">
+              <option value="">Select semester</option>
+              <option value="Fall">Fall</option>
+              <option value="Spring">Spring</option>
+              <option value="Summer">Summer</option>
+            </select>
+            <select id="prof-modal-year">
+              <option value="">Year</option>
+            </select>
+          </div>
+
+          <label class="modal-label">Your Review *</label>
+          <textarea
+            id="prof-modal-text"
+            rows="4"
+            placeholder="Share your experience with this professor..."
+          ></textarea>
+
+          <p class="modal-hint">Your review will be posted anonymously.</p>
+
+          <div class="review-form-actions">
+            <button
+              type="button"
+              class="btn btn-ghost btn-small"
+              id="prof-modal-cancel"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary btn-small"
+              id="prof-modal-submit"
+            >
+              Submit Review
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="footer-col">
+          <!-- Brand clickable -> home -->
+          <a href="index.html" class="brand">
+            <div class="brand-icon brand-icon-small">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 8.5L12 4l9 4.5-9 4.5L3 8.5Z" />
+                <path d="M6.5 11l5.5 2.75L17.5 11" />
+                <path d="M19 10.5V16c0 1.66-3.13 3-7 3s-7-1.34-7-3v-5.5" />
+              </svg>
+            </div>
+            <span class="brand-name">RateMyCourse</span>
+          </a>
+          <p class="footer-text">
+            Empowering ADA University students to make informed decisions about
+            their courses through authentic peer reviews.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="courses.html">Browse Courses</a>
+          <a href="professors.html">Find Professors</a>
+          <a href="#why">About Us</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="mailto:ratemycourse@ada.edu.az">ratemycourse@ada.edu.az</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2025 RateMyCourse by Team EduVision. ADA University – School of IT and
+        Engineering.
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
