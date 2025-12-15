@@ -15,7 +15,7 @@ public class ReviewRequest {
     private String difficulty;
 
     @NotBlank
-    @Size(min = 10, max = 2000)
+    @Size(min = 1, max = 2000)
     private String text;
 
     @NotBlank
