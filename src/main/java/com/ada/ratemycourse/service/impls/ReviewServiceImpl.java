@@ -28,7 +28,6 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ProfessorRepository professorRepository;
 
-    @Override
     public ReviewResponse createReview(ReviewRequest request, User currentUser) {
         Review review = new Review();
         review.setUser(currentUser);
@@ -54,29 +53,33 @@ public class ReviewServiceImpl implements ReviewService {
         return mapToResponse(review, currentUser.getEmail());
     }
 
-    @Override
-    public List<ReviewResponse> getReviewsForCourse(Long courseId, String email) {
-        return reviewRepository.findByCourseId(courseId)
-                .stream()
-                .map(review -> mapToResponse(review, email))
+    public List<ReviewResponse> getReviewsForCourse(Long courseId, String currentUserEmail) {
+        return reviewRepository.findByCourseId(courseId).stream()
+                .map(review -> mapToResponse(review, currentUserEmail))
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<ReviewResponse> getReviewsForProfessor(Long professorId, String email) {
-        return reviewRepository.findByProfessorId(professorId)
-                .stream()
-                .map(review -> mapToResponse(review, email))
+    public List<ReviewResponse> getReviewsForProfessor(Long professorId, String currentUserEmail) {
+        // Get both direct professor reviews and course reviews
+        List<Review> directReviews = reviewRepository.findByProfessorId(professorId);
+
+        // Get all courses by this professor
+        Professor professor = professorRepository.findById(professorId)
+                .orElseThrow(() -> new RuntimeException("Professor not found"));
+
+        List<Review> allReviews = directReviews;
+
+        return allReviews.stream()
+                .map(review -> mapToResponse(review, currentUserEmail))
                 .collect(Collectors.toList());
     }
 
-    @Override
     public ReviewResponse updateReview(Long reviewId, ReviewRequest request, User currentUser) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
 
         if (!review.getUser().getId().equals(currentUser.getId())) {
-            throw new RuntimeException("You can only update your own reviews");
+            throw new RuntimeException("You can only edit your own reviews");
         }
 
         review.setRating(request.getRating());
@@ -85,11 +88,16 @@ public class ReviewServiceImpl implements ReviewService {
         review.setSemester(request.getSemester());
         review.setYear(request.getYear());
 
+        if (request.getCourseId() != null) {
+            Course course = courseRepository.findById(request.getCourseId())
+                    .orElseThrow(() -> new RuntimeException("Course not found"));
+            review.setCourse(course);
+        }
+
         review = reviewRepository.save(review);
         return mapToResponse(review, currentUser.getEmail());
     }
 
-    @Override
     public void deleteReview(Long reviewId, User currentUser) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
@@ -101,16 +109,49 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.delete(review);
     }
 
-    @Override
+    // Make this method public so other services can use it
     public String calculateDifficulty(List<Review> reviews) {
-        if (reviews.isEmpty()) return "Unknown";
+        if (reviews == null || reviews.isEmpty()) return null;
 
-        long hard = reviews.stream().filter(r -> "Hard".equals(r.getDifficulty())).count();
-        long moderate = reviews.stream().filter(r -> "Moderate".equals(r.getDifficulty())).count();
-        long easy = reviews.stream().filter(r -> "Easy".equals(r.getDifficulty())).count();
+        int score = 0;
+        for (Review review : reviews) {
+            switch (review.getDifficulty()) {
+                case "Easy": score += 3; break;
+                case "Moderate": score += 1; break;
+                case "Hard": score += 0; break;
+            }
+        }
 
-        if (hard >= moderate && hard >= easy) return "Hard";
-        if (moderate >= easy) return "Moderate";
-        return "Easy";
+        double avg = (double) score / reviews.size();
+        if (avg >= 2) return "Easy";
+        if (avg >= 0.5) return "Moderate";
+        return "Hard";
+    }
+
+    private ReviewResponse mapToResponse(Review review, String currentUserEmail) {
+        ReviewResponse response = new ReviewResponse();
+        response.setId(review.getId());
+        response.setRating(review.getRating());
+        response.setDifficulty(review.getDifficulty());
+        response.setText(review.getText());
+        response.setSemester(review.getSemester());
+        response.setYear(review.getYear());
+        response.setCreatedAt(review.getCreatedAt());
+
+        if (review.getCourse() != null) {
+            response.setCourseCode(review.getCourse().getCode());
+            response.setCourseTitle(review.getCourse().getTitle());
+        }
+
+        if (review.getProfessor() != null) {
+            response.setProfessorName(review.getProfessor().getName());
+        }
+
+        // Check if current user can edit (either logged in user matches or no user email provided)
+        boolean canEdit = currentUserEmail != null &&
+                review.getUser().getEmail().equals(currentUserEmail);
+        response.setCanEdit(canEdit);
+
+        return response;
     }
 }
