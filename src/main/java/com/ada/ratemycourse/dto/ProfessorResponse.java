@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@Builder
+
 public class ProfessorResponse {
     private Long id;
     private String name;

@@ -60,7 +60,16 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     public List<ReviewResponse> getReviewsForProfessor(Long professorId, String currentUserEmail) {
-        return reviewRepository.findByProfessorId(professorId).stream()
+        // Get both direct professor reviews and course reviews
+        List<Review> directReviews = reviewRepository.findByProfessorId(professorId);
+
+        // Get all courses by this professor
+        Professor professor = professorRepository.findById(professorId)
+                .orElseThrow(() -> new RuntimeException("Professor not found"));
+
+        List<Review> allReviews = directReviews;
+
+        return allReviews.stream()
                 .map(review -> mapToResponse(review, currentUserEmail))
                 .collect(Collectors.toList());
     }
@@ -79,6 +88,12 @@ public class ReviewServiceImpl implements ReviewService {
         review.setSemester(request.getSemester());
         review.setYear(request.getYear());
 
+        if (request.getCourseId() != null) {
+            Course course = courseRepository.findById(request.getCourseId())
+                    .orElseThrow(() -> new RuntimeException("Course not found"));
+            review.setCourse(course);
+        }
+
         review = reviewRepository.save(review);
         return mapToResponse(review, currentUser.getEmail());
     }
@@ -94,8 +109,9 @@ public class ReviewServiceImpl implements ReviewService {
         reviewRepository.delete(review);
     }
 
+    // Make this method public so other services can use it
     public String calculateDifficulty(List<Review> reviews) {
-        if (reviews.isEmpty()) return null;
+        if (reviews == null || reviews.isEmpty()) return null;
 
         int score = 0;
         for (Review review : reviews) {
@@ -131,7 +147,10 @@ public class ReviewServiceImpl implements ReviewService {
             response.setProfessorName(review.getProfessor().getName());
         }
 
-        response.setCanEdit(review.getUser().getEmail().equals(currentUserEmail));
+        // Check if current user can edit (either logged in user matches or no user email provided)
+        boolean canEdit = currentUserEmail != null &&
+                review.getUser().getEmail().equals(currentUserEmail);
+        response.setCanEdit(canEdit);
 
         return response;
     }

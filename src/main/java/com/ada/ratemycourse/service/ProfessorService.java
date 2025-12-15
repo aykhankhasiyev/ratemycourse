@@ -1,13 +1,18 @@
 package com.ada.ratemycourse.service;
 
-
 import com.ada.ratemycourse.dto.ProfessorResponse;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
 public interface ProfessorService {
+    @Nullable List<ProfessorResponse> getAllProfessors();
 
-    List<ProfessorResponse> getAll();
+    @Nullable ProfessorResponse getProfessorByName(String name);
 
-    ProfessorResponse getById(Long id);
+    @Nullable ProfessorResponse getProfessorById(Long id);
+
+    @Nullable List<ProfessorResponse> searchProfessors(String query);
+
+    @Nullable List<ProfessorResponse> getProfessorsBySchool(String school);
 }
